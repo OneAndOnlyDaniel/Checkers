@@ -3,7 +3,7 @@ import sys
 from colorama import Fore, Back, Style
 
 def gameManager(isWhiteTurn, board, player1, player2):
-	sys.stdout.write("\x1b[8;{rows};{cols}t".format(rows=28, cols=67))
+	sys.stdout.write("\x1b[8;{rows};{cols}t".format(rows=30, cols=67))
 	isRunning = True
 	while(isRunning):
 		os.system('cls' if os.name == 'nt' else 'clear')
@@ -12,7 +12,9 @@ def gameManager(isWhiteTurn, board, player1, player2):
 		getInput = True
 		while(getInput):
 			getInput = False
-			s = input("Enter a position like [c6] to select a piece\n")
+			s = input("Enter a position like [c6] to select a piece, or type \"back\"\n")
+			if s == "back":
+				return [isWhiteTurn, board]
 			x = ord(s[0]) - 97
 			y = int(s[1]) - 1
 
@@ -71,6 +73,8 @@ def gameManager(isWhiteTurn, board, player1, player2):
 		print("Press ENTER to continue")
 
 		isWhiteTurn = not(isWhiteTurn)
+
+	return [isWhiteTurn, board]
 
 def userInput(query):
 	while(getInput):
@@ -134,7 +138,7 @@ def getLegalMoves(y, x, f, isWhiteTurn,board):
 	# board gives us the global boardstate
 	s = ""
 
-	# TODO: Put logic for White and Black Queens
+	# TODO: Add logic for White and Black Queens
 	if f == 1: # White Pawn
 		if y == 0:
 			board[y][x] = 4 # Promotes to a White Queen

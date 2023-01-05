@@ -1,3 +1,20 @@
+def writeBoard(board, isWhiteTurn, player1, player2, name):
+	f = open(name + ".board", "w")
+	turnStr = "1" if isWhiteTurn else "2"
+	s = "{0},{1},{2}\n".format(turnStr,player1,player2)
+	for r in board:
+		temp = ""
+		for c in r:
+			temp = temp + str(c) + ", "
+
+		temp = temp[:-2]
+		s = s + temp + "\n"
+
+	s = s[:-1]
+
+	f.write(s)
+	f.close()
+
 def readBoard(directory):
 	s = open(directory, "r").read()
 	
