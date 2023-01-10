@@ -1,12 +1,22 @@
 class Board:
-	def __init__(self, board, isWhiteTurn, player1="Player1", player2="Player2", smoves = []):
+	def __init__(self, board, turnNumber, player1="Player1", player2="Player2", moves = []):
 		self.board = board
-		self.isWhiteTurn = isWhiteTurn
+		self.turnNumber = turnNumber
 		self.player1 = player1
 		self.player2 = player2
 		self.moves = moves
 
 	def __str__(self):
+		s = "{0},{1},{2}\n".format(self.turnNumber, self.player1, self.player2)
+		for y in range(8):
+			for x in range(4):
+				s = s + self.board[4 * y + x]
+			s = s + "\n"
+		
+		s = s + self.moves
+		return s
+
+	def renderBoard(self):
 		s = ""
 		for y in range(8):
 			for x in range(8):
@@ -20,37 +30,25 @@ class Board:
 						s = s + self.board[4 * y + x // 2]
 					else:
 						s = s + "."
-
 			s = s + "\n"
-		return s
 
-	def IORead(boardName):
-		# Returning (board, isWhiteTurn, player1, player2, moves)
-		f = open("src/Boards/{0}.txt".format(boardName), "r")
-		s = f.read()
-		f.close()
+		return s[:-1]
 
-		splitFile = s.split('\n')
+def coordinateToIndex(coord):
+		# The order is : (xy) where x is either a number or a letter
+		# and y is a always a number
+		# If the first char is a letter then convert it to a number
+		# Low.cs.lttrs. start w/ ASCII index 97, we index from 1 so the + 1
+		if(coord[0].isalpha()):
+			x = ord(coord[0]) - 97 + 1
+		else:
+			x = int(coord[0])
 
-		# Extracts the first row. The first row is of the form "1,Player1,Player2"
-		firstRow = splitFile[0].split(',')
+		y = int(coord[1])
 
-		# Determines whose turn it is, starts with 1
-		isWhiteTurn = (int(firstRow[0]) % 2 == 1)
-		player1 = firstRow[1]
-		player2 = firstRow[2]
+		if (x < 1 or x > 8 or y < 1 or y > 8):
+			raise Exception("Out of bounds")
 
-		# The actual board
-		sboard = splitFile[1:9]
-		# The moves that were played, might be empty
-		smoves = splitFile[9]
+		if ((x % 2) + (y % 2)) >= 1:
+			raise Exception("Need to have odd incides")
 
-		# Writes the board into a 32 element list
-		board = []
-		for r in sboard:
-			for c in r:
-				board.append(c)
-
-		print(board)
-
-		return [board, isWhiteTurn, player1, player2, smoves]

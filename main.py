@@ -1,8 +1,8 @@
 import os
 import sys
 
-import src.IO as IO
 from src.Board import *
+import src.IO as IO
 
 neighborsDict = {
 	0 : [4, 5],
@@ -39,6 +39,7 @@ neighborsDict = {
 	31 : [27, 26],
 }
 
-[board, isWhiteTurn, player1, player2, smoves] = IO.ReadBoard()
+[board, turnNumber, player1, player2, smoves] = IO.ReadBoard("startingPosition")
+b = Board(board, turnNumber, player1, player2, smoves)
 
-print("Here we are")
+coordinateToIndex("a2")

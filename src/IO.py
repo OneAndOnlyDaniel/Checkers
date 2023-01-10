@@ -1,8 +1,8 @@
-from Board import *
+import os
 
-def ReadBoard():
-	# Returning (board, isWhiteTurn, player1, player2, moves)
-	f = open("src/Boards/startingPosition.txt", "r")
+def ReadBoard(file):
+	# Returning (board, turnNumber, player1, player2, moves)
+	f = open("src/Boards/{0}.txt".format(file), "r")
 	s = f.read()
 	f.close()
 
@@ -12,8 +12,8 @@ def ReadBoard():
 	firstRow = splitFile[0].split(',')
 
 	# Determines whose turn it is, starts with 1
-	isWhiteTurn = (int(firstRow[0]) % 2 == 1)
-	player1 = firstRow[1]
+		turnNumber = firstRow[0]
+		player1 = firstRow[1]
 	player2 = firstRow[2]
 
 	# The actual board
@@ -27,6 +27,4 @@ def ReadBoard():
 		for c in r:
 			board.append(c)
 
-	print(board)
-
-	return [board, isWhiteTurn, player1, player2, smoves)
+	return [board, turnNumber, player1, player2, smoves]
