@@ -1,0 +1,10 @@
+6,Player1,Player2
+bb.b
+bbbb
+bbbb
+..b.
+w.w.
+wwww
+wwww
+wwww
+11 15,23 19,8 11,22 17,3 8
